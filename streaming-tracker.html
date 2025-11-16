@@ -325,7 +325,7 @@
             <h1>📺 My Streaming Tracker</h1>
             <p>Track shows across ALL streaming services<br>
             Never forget which platform has your show<br>
-            Remember where you left off - Season & Episode<br>
+            Optionally track progress - Season & Episode<br>
             Stop endless scrolling, start watching!</p>
         </div>
 
@@ -366,10 +366,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Season & Episode</label>
+                    <label>Season & Episode (Optional)</label>
                     <div class="episode-group">
-                        <input type="number" id="season" placeholder="Season" min="0" required>
-                        <input type="number" id="episode" placeholder="Episode" min="0" required>
+                        <input type="number" id="season" placeholder="Season" min="0">
+                        <input type="number" id="episode" placeholder="Episode" min="0">
                     </div>
                 </div>
 
@@ -474,8 +474,8 @@
             const show = {
                 service: document.getElementById('service').value,
                 title: document.getElementById('title').value,
-                season: document.getElementById('season').value,
-                episode: document.getElementById('episode').value,
+                season: document.getElementById('season').value || '',
+                episode: document.getElementById('episode').value || '',
                 date: document.getElementById('date').value,
                 status: document.getElementById('status').value
             };
@@ -538,7 +538,20 @@
                 // Sort by date (most recent first)
                 shows.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-                showsList.innerHTML = shows.map(show => `
+                showsList.innerHTML = shows.map(show => {
+                    // Check if season/episode are provided
+                    const hasProgress = show.season !== '' && show.episode !== '';
+                    const progressDisplay = hasProgress 
+                        ? `<div class="detail-item">
+                                <span class="detail-label">Progress</span>
+                                <span class="detail-value">S${show.season} E${show.episode}</span>
+                           </div>`
+                        : `<div class="detail-item">
+                                <span class="detail-label">Progress</span>
+                                <span class="detail-value" style="color: #999;">Not tracking</span>
+                           </div>`;
+                    
+                    return `
                     <div class="show-card">
                         <div class="show-header">
                             <div>
@@ -550,10 +563,7 @@
                             </div>
                         </div>
                         <div class="show-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Progress</span>
-                                <span class="detail-value">S${show.season} E${show.episode}</span>
-                            </div>
+                            ${progressDisplay}
                             <div class="detail-item">
                                 <span class="detail-label">Status</span>
                                 <span class="status-badge status-${show.status.toLowerCase()}">${show.status}</span>
@@ -564,7 +574,8 @@
                             </div>
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             };
         }
 

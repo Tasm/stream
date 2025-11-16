@@ -1,7 +1,7 @@
 {
   "name": "My Streaming Tracker",
   "short_name": "Streaming",
-  "description": "Track shows across all streaming services. Never forget which platform has your show or where you left off!",
+  "description": "Track shows across all streaming services. Never forget which platform has your show. Optionally track your progress with season and episode numbers!",
   "start_url": "/streaming-tracker.html",
   "display": "standalone",
   "background_color": "#667eea",
