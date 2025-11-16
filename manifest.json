@@ -1,6 +1,6 @@
 {
-  "name": "My Streaming Tracker",
-  "short_name": "Streaming",
+  "name": "TV Show Tracker",
+  "short_name": "TV Tracker",
   "description": "Track shows across all streaming services. Never forget which platform has your show. Optionally track your progress with season and episode numbers!",
   "start_url": "streaming-tracker.html",
   "display": "standalone",
